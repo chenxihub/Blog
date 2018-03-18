@@ -1,0 +1,40 @@
+{% extends 'layout.html'%}
+
+{% block main %}
+<div class="jumbotron">
+    <h1>Hello, {{userInfo.username}}!</h1>
+    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or
+        information.</p>
+</div>
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="/">管理首页</a></li>
+        <li><span>用户管理</span></li>
+    </ol>
+</div>
+<div class="container-fluid">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>用户ID</th>
+            <th>用户名</th>
+            <th>密码</th>
+            <th>是否管理员</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for users in user %}
+        <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{users._id.toString()}}</td>
+            <td>{{users.username}}</td>
+            <td>{{users.password}}</td>
+            <td>{{users.isAdmin}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include 'page.html'%}
+</div>
+{% endblock%}

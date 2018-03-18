@@ -1,0 +1,41 @@
+{% extends 'layout.html'%}
+
+{% block main %}
+<div class="jumbotron">
+    <h1>Hello, {{userInfo.username}}!</h1>
+    <p>This is a simple hero unit, a simple jumbotron-style component for calling extra attention to featured content or
+        information.</p>
+</div>
+<div class="container-fluid">
+    <ol class="breadcrumb">
+        <li><a href="/">分类管理</a></li>
+        <li><span>分类列表</span></li>
+    </ol>
+</div>
+<div class="container-fluid">
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>序号</th>
+            <th>分类名称</th>
+            <th>操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for categroy in categroies %}
+        <tr>
+            <th scope="row">{{loop.index}}</th>
+            <td>{{categroy._id.toString()}}</td>
+            <td>{{categroy.name}}</td>
+            <td>
+                <a href="/admin/categroy/edit?id={{categroy._id.toString()}}">修改</a>
+                <span> | </span>
+                <a href="/admin/categroy/delete?id={{categroy._id.toString()}}">删除</a>
+            </td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    {% include 'page.html'%}
+</div>
+{% endblock%}
