@@ -8,6 +8,7 @@ let router = express.Router();
 
 //引入数据库模型
 let User = require('../models/User');
+let content = require('../models/Content');
 
 //定义返回值的对象和编码
 let responsData;
@@ -117,11 +118,45 @@ router.post('/user/login', function (req, res, next) {
 
     })
 });
-
+//退出登录
 router.get('/user/logout', function (req, res) {
     req.cookies.set('userInfo', null);
     responsData.message = '退出成功';
     res.json(responsData);
     return;
+});
+//评论
+router.get('/comment', function (req, res) {
+    let contentId = req.query.contentid || '';
+    //查询数据库这篇内容的信息
+    content.findOne({
+        _id:contentId
+    }).then(function (content) {
+        responsData.message = '获取评论成功';
+        responsData.data = content.conments;
+        res.json(responsData);
+    });
+
+});
+//评论
+router.post('/comment', function (req, res) {
+    let contentId = req.body.contentid || '';
+    let postData = {
+            username: req.userInfo.username,
+            postTime: new Date(),
+            content: req.body.content
+        };
+    //查询数据库这篇内容的信息
+    content.findOne({
+        _id:contentId
+    }).then(function (content) {
+        content.conments.push(postData);
+        return content.save();
+    }).then(function (newContent) {
+        responsData.message = '评论成功';
+        responsData.data = newContent;
+        res.json(responsData);
+    });
+
 });
 module.exports = router;

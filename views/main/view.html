@@ -1,0 +1,49 @@
+{% extends 'layout.html'%}
+
+{% block layout %}
+<div class="center" style="width: 500px;float: left;">
+    <div class="detail_main">
+        <h2 class="detail_title">{{contents.title}}</h2>
+        <p class="detail_tag" style=" width: 100%;clear: both;margin-top: 8px;">
+            <span style="float: left; display: inline-block;padding: 6px 10px;white-space: nowrap;background-color: #f1f8ff;border-radius: 3px;color: #8590a6;font-size: 14px;line-height: 20px;">分类：{{contents.categroy.name}}</span>
+            <span style="float: left;display: inline-block;padding: 6px 10px;white-space: nowrap;background-color: #f1f8ff;border-radius: 3px;color: #8590a6;font-size: 14px;line-height: 20px;">作者：{{contents.user.username}}</span>
+            <span style="float: left;display: inline-block;padding: 6px 10px;white-space: nowrap;background-color: #f1f8ff;border-radius: 3px;color: #8590a6;font-size: 14px;line-height: 20px;">阅读:{{contents.views}}</span>
+            <span style="float: left;display: inline-block;padding: 6px 10px;white-space: nowrap;background-color: #f1f8ff;border-radius: 3px;color: #8590a6;font-size: 14px;line-height: 20px;">评论：66</span>
+            <span style="float: left;display: inline-block;padding: 6px 10px;white-space: nowrap;background-color: #f1f8ff;border-radius: 3px;color: #8590a6;font-size: 14px;line-height: 20px;">{{contents.addTime | date('Y/m/d H:i:s',-8*60)}}</span>
+        </p>
+        <div class="detail_content">
+            <p>
+                {{contents.content}}
+            </p>
+        </div>
+        <div>
+            <div class="discuss">
+                <div class="user_tab">
+                    <span class="discuss_title">评论(<i id="count">0</i>)</span>
+                </div>
+                <div class="discuss_main">
+                    {% if userInfo._id %}
+                    <textarea class="discuss_input" name="" id="" cols="30" rows="10" placeholder="请在这写下评论～"></textarea>
+                    <input type="hidden" value="{{contents.id}}" id="contentId" >
+                    <input type="button" value="评论" class="btn btn-primary" id="comment">
+                    {% else %}
+                    <p class="discuss_default">您还没有登录，请先登录～</p>
+                    {% endif%}
+
+                    <div class="discuss_content" style="margin-top: 30px">
+                        <ul class="discuss_list">
+                            <!--<li>-->
+                                <!--<p class="discuss_user"><span>一只打柴沟</span><i>发表于 2018-02-03</i></p>-->
+                                <!--<div class="discuss_userMain">-->
+                                    <!--哈哈哈，你这个渣渣～-->
+                                <!--</div>-->
+                            <!--</li>-->
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock%}

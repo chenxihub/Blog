@@ -14,14 +14,14 @@ let content = require('../models/Content');
 //判断是不是管理员用户
 router.use(function (req, res, next) {
     if (!req.userInfo.isAdmin) {
-        res.send('对不起，你不是管理员！');
+        res.send('对不起，您暂无权限！');
         return;
     }
     next();
 });
 
 router.get('/', function (req, res, next) {
-    // console.log(req.userInfo);
+    console.log(req.userInfo);
     res.render('admin/index', {
         userInfo: req.userInfo
     })
@@ -92,7 +92,7 @@ router.get('/categroy/add', function (req, res, next) {
 //添加分类 post
 router.post('/categroy/add', function (req, res, next) {
     let name = req.body.name || '';
-    console.log('name:' + name);
+    // console.log('name:' + name);
     if (name == '') {
         res.render('admin/error', {
             userInfo: req.userInfo,
@@ -233,7 +233,9 @@ router.get('/content', function (req, res, next) {
          * 查询数据库注册用户
          * populate('categroy') 查询关联表结构
          */
-        content.find().sort({ _id: -1 }).limit(limit).skip(skip).populate('categroy').then(function (contents) {
+        content.find().sort({ _id: -1 }).limit(limit).skip(skip).populate(['categroy', 'user']).sort({
+            addTime: -1
+        }).then(function (contents) {
             // console.log(contents);
             res.render('admin/content', {
                 userInfo: req.userInfo,
@@ -282,6 +284,7 @@ router.post('/content/add', function (req, res, next) {
     new content({
         categroy: req.body.categroy,
         title: req.body.title,
+        user: req.userInfo._id.toString(),
         description: req.body.description,
         content: req.body.content
     }).save().then(function (rs) {
@@ -349,6 +352,22 @@ router.post('/content/edit', function (req, res) {
             userInfo: req.userInfo,
             message: '保存内容成功',
             url: '/admin/content/edit?id=' + id
+        })
+    })
+});
+
+/**
+ * 内容删除
+ */
+router.get('/content/delete', function (req, res) {
+    let id = req.query.id;
+    content.remove({
+        _id: id
+    }).then(function () {
+        res.render('admin/success', {
+            userInfo: req.userInfo,
+            message: '删除成功',
+            url: '/admin/content'
         })
     })
 })

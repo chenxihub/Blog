@@ -3,7 +3,7 @@ $(function () {
 
     // 登录注册切换
     $('.j_userTab span').on('click', function () {
-        var _index = $(this).index();
+        let _index = $(this).index();
         $(this).addClass('user_cur').siblings().removeClass('user_cur');
         $('.user_login,.user_register').hide();
         if (_index == 0) {
@@ -17,9 +17,9 @@ $(function () {
 
 
     // 登录校验
-    var reg = /^[^<>"'$\|?~*&@(){}]*$/;
-    var $login = $('#login');
-    var $register = $('#register');
+    let reg = /^[^<>"'$\|?~*&@(){}]*$/;
+    let $login = $('#login');
+    let $register = $('#register');
     // $('.user_login_btn').on('click', function () {
     //     if ($login.find('.user_input').eq(0).find('input').val().trim() == '') {
     //         $login.find('.user_err span').text('用户名不能为空').show();
@@ -127,13 +127,66 @@ $(function () {
                 }
             }
         })
-    })
+    });
+
+
+    //评论
+    $('#comment').on('click', function () {
+        $.ajax({
+            type: 'POST',
+            url: '/api/comment',
+            data: {
+                contentid: $('#contentId').val(),
+                content: $('.discuss_input').val()
+            },
+            success: function (responseData) {
+                $('.discuss_input').val('');
+                console.log(responseData);
+                renderComment(responseData.data.conments.reverse());
+            }
+        })
+    });
+    //自调用函数去请求评论
+    (function loadData() {
+        $.ajax({
+            type: 'GET',
+            url: '/api/comment',
+            data: {
+                contentid: $('#contentId').val()
+            },
+            success: function (responseData) {
+                console.log(responseData);
+                renderComment(responseData.data.reverse());
+            }
+        })
+    }());
+
+    function renderComment(comments) {
+        $('#count').html(comments.length);
+        let html = '';
+        let len = comments.length;
+        for (let i = 0; i < len; i++) {
+            html += `
+                <li>
+                <p class="discuss_user"><span>${comments[i].username}</span><i>发表于 ${formatDate(comments[i].postTime)}</i></p>
+                <div class="discuss_userMain">${comments[i].content}</div></li>
+            `;
+        }
+        $('.discuss_list').html(html);
+    }
+
+    function formatDate(date) {
+        let date1 = new Date(date);
+        let formatDate = date1.getFullYear() + '/' + (date1.getMonth() + 1) + '/' + date1.getDate() + '/  ' + date1.getHours() + ':' + date1.getMinutes() + ':' + date1.getSeconds();
+        return formatDate;
+    }
+
     // 打字效果
-    var str = 'hello world';
-    var i = 0;
+    let str = 'hello world';
+    let i = 0;
 
     function typing() {
-        var divTyping = $('.banner h2');
+        let divTyping = $('.banner h2');
         if (i <= str.length) {
             divTyping.text(str.slice(0, i++) + '_');
             setTimeout(function () {
