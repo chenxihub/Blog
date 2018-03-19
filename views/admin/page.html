@@ -1,17 +1,13 @@
 <nav aria-label="...">
     <ul class="pager">
-        {% if user %}
-        <li><a href="/admin/user?page={{page-1}}">Previous</a></li>
-        {% else %}
-        <li><a href="/admin/categroy?page={{page-1}}">Previous</a>
-            {% endif %}
+        <li>
+            <a href="/admin/{{pageUrl}}?page={{page-1}}">Previous</a>
+        </li>
         <li>
             <span>一共<em>{{count}}</em>条数据，每页显示<em>{{limit}}</em>条数据，一共<em>{{pages}}</em>页，当前是第<em>{{page}}</em>页</span>
         </li>
-        {% if user %}
-        <li><a href="/admin/user?page={{page+1}}">Next</a></li>
-        {% else %}
-        <li><a href="/admin/categroy?page={{page+1}}">Previous</a>
-            {% endif %}
+        <li>
+            <a href="/admin/{{pageUrl}}?page={{page+1}}">Next</a>
+        </li>
     </ul>
 </nav>

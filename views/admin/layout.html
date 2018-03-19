@@ -20,14 +20,25 @@
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li class="active"><a href="/admin/user">用户管理<span class="sr-only"></span></a></li>
+                <li><a href="/admin/user">用户管理<span class="sr-only"></span></a></li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                        aria-expanded="false">分类管理 <span class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li><a href="/admin/categroy">分类列表</a></li>
                         <li><a href="/admin/categroy/add">添加分类</a></li>
-                        <li><a href="#">其他分类</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">other</a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#">One</a></li>
+                    </ul>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                       aria-expanded="false">内容管理 <span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="/admin/content">内容列表</a></li>
+                        <li><a href="/admin/content/add">添加内容</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#">other</a></li>
                         <li role="separator" class="divider"></li>
@@ -59,7 +70,7 @@
     </div>
 </nav>
 <div class="container-fluid" style="padding-top: 70px;">
-    <!--模板占位符-->
+
     {% block main %}{% endblock %}
 </div>
 <script>

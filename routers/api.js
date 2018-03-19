@@ -7,7 +7,7 @@ let express = require('express');
 let router = express.Router();
 
 //引入数据库模型
-let User = require('../models/user');
+let User = require('../models/User');
 
 //定义返回值的对象和编码
 let responsData;

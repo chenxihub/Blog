@@ -17,7 +17,7 @@ let bodyParse = require('body-parser');
 let userCookies = require('cookies');
 
 //应用数据库模型
-let User = require('./models/user');
+let User = require('./models/User');
 
 //设置静态文件托管
 //当用户访问/public路径的时候，返回给__dirname + '/public'文件目录下的文件
